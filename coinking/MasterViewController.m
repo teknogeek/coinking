@@ -30,11 +30,24 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    NSURL *url=[NSURL URLWithString:@"https://coinking.io/api.php?key=9f5671cf0a4bc9007fd9aa81a23e8c24&type=currentlymining&output=json"];   // pass your URL  Here.
+    
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    NSError *error;
+    
+    NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    NSLog(@"%@", json);
+    
+    NSMutableArray *nowMiningArray = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *restaurantParameters in json)
+    {
+        [nowMiningArray addObject:restaurantParameters];
+    }
+    NSLog(@"%@", [nowMiningArray[0] objectForKey:@"difficulty"]);
+    [self insertNewObject:[nowMiningArray[0] objectForKey:@"difficulty"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,12 +56,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
+- (void)insertNewObject:(NSString *)property
 {
-    if (!_objects) {
+    if (!_objects)
+    {
         _objects = [[NSMutableArray alloc] init];
     }
-    [_objects insertObject:[NSDate date] atIndex:0];
+    [_objects insertObject:property atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -71,6 +85,14 @@
 
     NSDate *object = _objects[indexPath.row];
     cell.textLabel.text = [object description];
+    
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+        UIImage *coinImage = [UIImage imageWithData:
+                          [NSData dataWithContentsOfURL:
+                           [NSURL URLWithString: @"https://coinking.io/assets/coins/large-dogecoin.png"]]];
+        imgView.image = coinImage;
+        cell.imageView.image = imgView.image;
+    
     return cell;
 }
 
@@ -89,22 +111,6 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
 }
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
