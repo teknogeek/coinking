@@ -12,6 +12,9 @@
 
 @interface MasterViewController () {
     NSMutableArray *_objects;
+    NSDictionary *algorithms;
+    NSArray *algorithmSectionTitles;
+    NSMutableArray *nowMiningArray;
 }
 @end
 
@@ -30,25 +33,38 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-
-    NSURL *url=[NSURL URLWithString:@"https://coinking.io/api.php?key=9f5671cf0a4bc9007fd9aa81a23e8c24&type=currentlymining&output=json"];   // pass your URL  Here.
+    
+    NSURL *url = [NSURL URLWithString:@"https://coinking.io/api.php?key=9f5671cf0a4bc9007fd9aa81a23e8c24&type=currentlymining&output=json"];   // pass your URL  Here.
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSError *error;
     NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     NSLog(@"%@", json);
     
-    NSMutableArray *nowMiningArray = [[NSMutableArray alloc] init];
+    nowMiningArray = [[NSMutableArray alloc] init];
     
     for (NSDictionary *restaurantParameters in json)
     {
         [nowMiningArray addObject:restaurantParameters];
     }
-    [self insertNewObject:@"Now Mining" value:[[nowMiningArray[1] objectForKey:@"name"] capitalizedString]];
-    [self insertNewObject:@"Difficulty" value:[nowMiningArray[0] objectForKey:@"difficulty"]];
-    [self insertNewObject:@"Difficulty" value:[nowMiningArray[0] objectForKey:@"difficulty"]];
-    [self insertNewObject:@"Difficulty" value:[nowMiningArray[0] objectForKey:@"difficulty"]];
-    [self insertNewObject:@"Hashrate (MH/s)" value:[nowMiningArray[0] objectForKey:@"hashrate"]];
-    [self insertNewObject:@"Now Mining" value:[[nowMiningArray[0] objectForKey:@"name"] capitalizedString]];
+    
+    algorithms = @{
+                   @"Scrypt" : @[[[nowMiningArray[0] objectForKey:@"name"] capitalizedString],
+                                 [NSString stringWithFormat:@"Hashrate: %@ MH/s", [nowMiningArray[0] objectForKey:@"hashrate"]],
+                                 [NSString stringWithFormat:@"Difficulty: %@", [nowMiningArray[0] objectForKey:@"difficulty"]]],
+                    @"Scrypt-N" : @[[[nowMiningArray[1] objectForKey:@"name"] capitalizedString],
+                                    [NSString stringWithFormat:@"Hashrate: %@ MH/s", [nowMiningArray[1] objectForKey:@"hashrate"]],
+                                    [NSString stringWithFormat:@"Difficulty: %@", [nowMiningArray[1] objectForKey:@"difficulty"]]],
+                   @"SHA-256" : @[[[nowMiningArray[2] objectForKey:@"name"] capitalizedString],
+                                  [NSString stringWithFormat:@"Hashrate: %@ MH/s", [nowMiningArray[2] objectForKey:@"hashrate"]],
+                                  [NSString stringWithFormat:@"Difficulty: %@", [nowMiningArray[2] objectForKey:@"difficulty"]]],
+                   @"X11" : @[[[nowMiningArray[3] objectForKey:@"name"] capitalizedString],
+                              [NSString stringWithFormat:@"Hashrate: %@ MH/s", [nowMiningArray[3] objectForKey:@"hashrate"]],
+                              [NSString stringWithFormat:@"Difficulty: %@", [nowMiningArray[3] objectForKey:@"difficulty"]]],
+                   @"X13" : @[[[nowMiningArray[4] objectForKey:@"name"] capitalizedString],
+                              [NSString stringWithFormat:@"Hashrate: %@ MH/s", [nowMiningArray[4] objectForKey:@"hashrate"]],
+                              [NSString stringWithFormat:@"Difficulty: %@", [nowMiningArray[4] objectForKey:@"difficulty"]]]
+                   };
+    algorithmSectionTitles = [[algorithms allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,7 +73,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(NSString *)name value:(NSString *)value
+- (void)insertNewObject:(NSString *)name value:(NSString *)value inSection:(NSInteger)section
 {
     if (!_objects)
     {
@@ -66,11 +82,7 @@
     NSString *result = [NSString stringWithFormat:@"%@: %@", name, value];
     [_objects insertObject:result atIndex:0];
     NSLog(@"%d", _objects.count);
-    NSInteger section = 0;
-    if(_objects.count == 4)
-    {
-        section = 2;
-    }
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -79,30 +91,55 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    // Return the number of sections.
+    return [algorithmSectionTitles count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [algorithmSectionTitles objectAtIndex:section];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    // Return the number of rows in the section.
+    NSString *sectionTitle = [algorithmSectionTitles objectAtIndex:section];
+    NSArray *sectionAlgorithms = [algorithms objectForKey:sectionTitle];
+    return [sectionAlgorithms count];
 }
+
+/*
+UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+UIImage *coinImage = [UIImage imageWithData:
+                      [NSData dataWithContentsOfURL:
+                       [NSURL URLWithString:[NSString stringWithFormat:@"https://coinking.io/assets/coins/large-%@.png", name]]]];
+imgView.image = coinImage;
+cell.imageView.image = imgView.image;
+*/
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    NSString *name = @"dogecoin";
-    NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
     
-    if((indexPath.row == 0) && (indexPath.row == 6))
-    {
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-        UIImage *coinImage = [UIImage imageWithData:
-                              [NSData dataWithContentsOfURL:
-                               [NSURL URLWithString:[NSString stringWithFormat:@"https://coinking.io/assets/coins/large-%@.png", name]]]];
-        imgView.image = coinImage;
-        cell.imageView.image = imgView.image;
-    }
+    // Configure the cell...
+    NSString *sectionTitle = [algorithmSectionTitles objectAtIndex:indexPath.section];
+    NSArray *sectionAlgorithms = [algorithms objectForKey:sectionTitle];
+    NSString *cellText = [sectionAlgorithms objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = cellText;
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    
+    UIImage *coinImage = [UIImage imageWithData:
+                          [NSData dataWithContentsOfURL:
+                           [NSURL URLWithString:
+                            [NSString stringWithFormat:@"https://coinking.io/assets/coins/large-%@.png", [cellText lowercaseString]
+                             ]
+                            ]
+                           ]
+                          ];
+    imgView.image = coinImage;
+    cell.imageView.image = imgView.image;
     return cell;
 }
 
