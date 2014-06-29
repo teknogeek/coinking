@@ -7,7 +7,7 @@
 //
 
 #import "MasterViewController.h"
-
+#import "SettingsViewController.h"
 #import "DetailViewController.h"
 
 @interface MasterViewController () {
@@ -34,7 +34,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    NSURL *url = [NSURL URLWithString:@"https://coinking.io/api.php?key=9f5671cf0a4bc9007fd9aa81a23e8c24&type=currentlymining&output=json"];   // pass your URL  Here.
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://coinking.io/api.php?key=%@&type=currentlymining&output=json", S];   // pass your URL  Here.
     NSData *data = [NSData dataWithContentsOfURL:url];
     NSError *error;
     NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];

@@ -11,18 +11,20 @@
 		B61F46E1195C57A700425008 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61F46E0195C57A700425008 /* CoreGraphics.framework */; };
 		B61F46E3195C57A700425008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61F46E2195C57A700425008 /* UIKit.framework */; };
 		B61F46E9195C57A700425008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B61F46E7195C57A700425008 /* InfoPlist.strings */; };
-		B61F46EB195C57A700425008 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46EA195C57A700425008 /* main.m */; };
-		B61F46EF195C57A700425008 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46EE195C57A700425008 /* AppDelegate.m */; };
+		B61F46EB195C57A700425008 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46EA195C57A700425008 /* main.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B61F46EF195C57A700425008 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46EE195C57A700425008 /* AppDelegate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B61F46F2195C57A700425008 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B61F46F0195C57A700425008 /* Main_iPhone.storyboard */; };
 		B61F46F5195C57A700425008 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B61F46F3195C57A700425008 /* Main_iPad.storyboard */; };
-		B61F46F8195C57A700425008 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46F7195C57A700425008 /* MasterViewController.m */; };
-		B61F46FB195C57A700425008 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46FA195C57A700425008 /* DetailViewController.m */; };
+		B61F46F8195C57A700425008 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46F7195C57A700425008 /* MasterViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B61F46FB195C57A700425008 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F46FA195C57A700425008 /* DetailViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		B61F46FD195C57A700425008 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B61F46FC195C57A700425008 /* Images.xcassets */; };
 		B61F4704195C57A700425008 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61F4703195C57A700425008 /* XCTest.framework */; };
 		B61F4705195C57A700425008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61F46DE195C57A700425008 /* Foundation.framework */; };
 		B61F4706195C57A700425008 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61F46E2195C57A700425008 /* UIKit.framework */; };
 		B61F470E195C57A700425008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B61F470C195C57A700425008 /* InfoPlist.strings */; };
 		B61F4710195C57A700425008 /* coinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F470F195C57A700425008 /* coinkingTests.m */; };
+		B66756591960652200B26F27 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B66756581960652200B26F27 /* MenuViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		B667573819606FEE00B26F27 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B667573719606FEE00B26F27 /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,10 @@
 		B61F470B195C57A700425008 /* coinkingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "coinkingTests-Info.plist"; sourceTree = "<group>"; };
 		B61F470D195C57A700425008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B61F470F195C57A700425008 /* coinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = coinkingTests.m; sourceTree = "<group>"; };
+		B66756571960652200B26F27 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		B66756581960652200B26F27 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		B667573619606FEE00B26F27 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		B667573719606FEE00B26F27 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +127,10 @@
 				B61F46EE195C57A700425008 /* AppDelegate.m */,
 				B61F46F0195C57A700425008 /* Main_iPhone.storyboard */,
 				B61F46F3195C57A700425008 /* Main_iPad.storyboard */,
+				B667573619606FEE00B26F27 /* SettingsViewController.h */,
+				B667573719606FEE00B26F27 /* SettingsViewController.m */,
+				B66756571960652200B26F27 /* MenuViewController.h */,
+				B66756581960652200B26F27 /* MenuViewController.m */,
 				B61F46F6195C57A700425008 /* MasterViewController.h */,
 				B61F46F7195C57A700425008 /* MasterViewController.m */,
 				B61F46F9195C57A700425008 /* DetailViewController.h */,
@@ -259,9 +269,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B61F46EF195C57A700425008 /* AppDelegate.m in Sources */,
+				B667573819606FEE00B26F27 /* SettingsViewController.m in Sources */,
 				B61F46F8195C57A700425008 /* MasterViewController.m in Sources */,
 				B61F46EB195C57A700425008 /* main.m in Sources */,
 				B61F46FB195C57A700425008 /* DetailViewController.m in Sources */,
+				B66756591960652200B26F27 /* MenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +488,7 @@
 				B61F4715195C57A700425008 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B61F4716195C57A700425008 /* Build configuration list for PBXNativeTarget "coinkingTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +497,7 @@
 				B61F4718195C57A700425008 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
